@@ -1,0 +1,9 @@
+# Ignore the massive raw datasets to prevent Docker build context from freezing/crashing
+311_Service_Requests_from_2020_to_Present_20260415.csv
+NYPD_Complaint_Data_Historic_20260415.csv
+
+# Ignore virtual environments or local cache
+__pycache__/
+.venv/
+venv/
+.env

@@ -16,7 +16,7 @@ To ensure everything runs smoothly across all operating systems, our repository 
 ```bash
 pip install -r requirements.txt
 ```
-* **`.gitignore`** & **`.dockerignore`**: These files prevent Git and Docker from accidentally trying to process our massive 18GB raw datasets, temporary Python files, and the `output/` folder. They keep our repository fast and lightweight.
+* **`.gitignore`** & **`.dockerignore`**: These files prevent Git and Docker from accidentally trying to process our massive 18GB raw datasets, temporary Python files, and the `output/` folder.
 * **`.gitattributes`**: Resolves cross-platform Git LFS and line-ending (CRLF/LF) corruption issues between Windows and Mac users.
 
 ## Preprocessing & Data Aggregation

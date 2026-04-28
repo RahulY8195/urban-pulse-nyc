@@ -56,7 +56,7 @@ for name, (model, params) in regression_models.items():
         
     model_labels.append(label)
     scores_list.append(score)
-    print(f"Tuned {name}: R2 = {score:.4f} | Params: {best_params}")
+    print(f"Tuned {name}: R2 = {score:.4f} | Params: {best_params if best_params else '(Baseline — no tuning applied)'}")
 
 plt.figure(figsize=(12, 8))
 

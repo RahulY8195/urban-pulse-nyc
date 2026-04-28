@@ -1,1 +1,26 @@
+# Raw datasets - too large for Git (18GB+)
 *.csv
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Auto-generated output files (not needed on GitHub)
+# bivariate_analysis.png and model_comparison_bar.png are intentionally
+# NOT ignored because they are embedded in README.md
+output/*.txt
+output/correlation_matrix.png
+output/feature_distributions.png
+output/model_predictions.png

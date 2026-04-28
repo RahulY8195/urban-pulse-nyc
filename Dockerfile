@@ -1,5 +1,5 @@
-# Use an official Python runtime as a parent image
-FROM python:3.14
+# Use official Python 3.11 slim runtime (stable and lightweight)
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -15,8 +15,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY generate_report.py /app/
 COPY preprocessed_data.csv /app/
 
-# Create output directory
+# Declare /app/output as a volume mount point so output saves to the host machine.
+# When running: docker run -v "$(pwd)/output:/app/output" urban-pulse-nyc
+VOLUME ["/app/output"]
+
+# Create output directory inside the container
 RUN mkdir -p /app/output
 
-# Run the generation script when the container launches
+# Run the generation script when the container launches.
 CMD ["python", "./generate_report.py"]

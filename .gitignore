@@ -18,8 +18,8 @@ env/
 Thumbs.db
 
 # Auto-generated output files (not needed on GitHub)
-# bivariate_analysis.png and model_comparison_bar.png are intentionally
-# NOT ignored because they are embedded in README.md
+# The following are intentionally NOT ignored because they are embedded in README.md:
+#   bivariate_analysis.png, model_comparison_bar.png, residual_plot.png, feature_importance.png
 output/*.txt
 output/correlation_matrix.png
 output/feature_distributions.png

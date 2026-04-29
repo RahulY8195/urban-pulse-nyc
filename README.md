@@ -2,6 +2,40 @@
 
 Urban Pulse NYC is an analytical pipeline that models the relationship between civic engagement (311 service requests) and monthly crime volume across NYC Police Precincts. Our analysis proves that the **volume** of monthly 311 complaints is the strongest predictor of neighborhood crime rates.
 
+## Getting Started
+
+Follow these steps to get the project running on your local machine.
+
+**1. Clone the repository:**
+```bash
+git clone https://github.com/RahulY8195/urban-pulse-nyc.git
+cd urban-pulse-nyc
+```
+
+**2. Install dependencies:**
+```bash
+pip install -r requirements.txt
+```
+
+**3. Download the raw datasets** (links below) and place them in the root of the repository folder.
+
+**4. Run the preprocessing script** to generate the aggregated dataset:
+```bash
+python preprocess_data.py
+```
+
+**5. Open the Jupyter Notebook** to explore the full analysis:
+```bash
+jupyter notebook milestone2_analysis.ipynb
+```
+
+Or run the automated report pipeline to regenerate all charts:
+```bash
+python generate_report.py
+```
+
+---
+
 ### Datasets
 
 * [NYPD Complaint Data Historic](https://drive.google.com/file/d/1c1P43ba6sPn_11zNGfYZd1q2o2SjS_1b/view?usp=sharing)
@@ -25,11 +59,29 @@ Before running any notebooks or models, you **must** run the preprocessing scrip
 ```bash
 python preprocess_data.py
 ```
-**What this does:**
-1. Parses the massive raw 18GB datasets.
-2. Extracts the `YYYY-MM` from the raw date strings.
-3. Aggregates all data by both `Police Precinct` AND `YearMonth` to create a robust Monthly Time-Series dataset.
-4. Generates a lightweight `preprocessed_data.csv` (4,620 rows) that is used to train our Random Forest Regressor model.
+
+**The challenge:** Both raw datasets are enormous (18GB+ combined) and cannot be loaded into memory at once. The script solves this using **chunk-based streaming** — reading and processing 1,000,000 rows at a time rather than all at once.
+
+**What this does, step by step:**
+1. **Streams the 311 dataset** in 1M-row chunks, extracting the `Police Precinct` number and the `YYYY-MM` from each complaint's creation date.
+2. **Classifies each 311 complaint** as either unresolved (Status contains `Open`, `Pending`, or `Unspecified`) or resolved, then aggregates totals per `(Precinct, YearMonth)` pair.
+3. **Streams the NYPD Complaint dataset** in the same way, counting total crime complaints per `(Precinct, YearMonth)` pair.
+4. **Merges both datasets** on `(Precinct, YearMonth)` using an inner join — keeping only months where both 311 and crime data exist for a given precinct.
+5. **Computes `unresolved_proportion`** as `unresolved_311 / total_311` for each row — a normalized measure of civic neglect.
+6. **Filters out invalid precincts** (e.g., Precinct 0) and sorts the final result by Precinct and YearMonth.
+
+**Output:** A lightweight `preprocessed_data.csv` with **4,620 rows** and 6 columns:
+
+| Column | Description |
+|---|---|
+| `Precinct` | NYC Police Precinct number |
+| `YearMonth` | Aggregation period (e.g., `2022-07`) |
+| `total_311` | Total 311 complaints filed that month |
+| `unresolved_311` | Complaints still Open/Pending/Unspecified |
+| `unresolved_proportion` | Fraction of complaints left unresolved |
+| `total_crimes` | Total NYPD crime complaints that month |
+
+
 
 ## Model Evaluation
 

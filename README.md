@@ -2,6 +2,8 @@
 
 Urban Pulse NYC is an analytical pipeline that models the relationship between civic engagement (311 service requests) and monthly crime volume across NYC Police Precincts. Our analysis proves that the **volume** of monthly 311 complaints is the strongest predictor of neighborhood crime rates.
 
+### Question that we are trying to answer
+> **Do neighborhoods in NYC with higher volumes of 311 complaints, or a higher proportion of unresolved complaints, experience higher crime rates?**
 ## Getting Started
 
 Follow these steps to get the project running on your local machine.
